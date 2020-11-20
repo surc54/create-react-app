@@ -62,6 +62,9 @@ const imageInlineSizeLimit = parseInt(
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 
+// Check if Postcss config exists
+const hasPostcssConfig = fs.existsSync(paths.appPostcssConfig);
+
 // Get the path to the uncompiled service worker (if it exists).
 const swSrc = paths.swSrc;
 
@@ -124,7 +127,7 @@ module.exports = function (webpackEnv) {
         // Adds vendor prefixing based on your specified browser support in
         // package.json
         loader: require.resolve('postcss-loader'),
-        options: {
+        options: hasPostcssConfig ? undefined : {
           // Necessary for external CSS imports to work
           // https://github.com/facebook/create-react-app/issues/2677
           ident: 'postcss',
